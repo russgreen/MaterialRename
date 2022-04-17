@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <!--<AddIn Type="Command">
+    <Text>Command MaterialRename</Text>
+    <Description>Some description for MaterialRename</Description>
+    <Assembly>MaterialRename.dll</Assembly>
+    <FullClassName>MaterialRename.Command</FullClassName>
+    <ClientId>d4927302-40ff-4165-9459-94d390d408f5</ClientId>
+    <VendorId>TBC_</VendorId>
+  </AddIn>-->
+  
+  <AddIn Type="Application">
+    <Name>MaterialRename</Name>
+    <Assembly>MaterialRename.dll</Assembly>
+    <ClientId>4146D55D-B30E-4B43-B0C7-A20E8A3A70F3</ClientId>
+    <FullClassName>MaterialRename.App</FullClassName>
+    <VendorId>ARBG</VendorId>
+	<VisibilityMode>NotVisibleInFamily</VisibilityMode>
+	<VisibilityMode>NotVisibleWhenNoActiveDocument</VisibilityMode>
+  </AddIn>
+</RevitAddIns>
