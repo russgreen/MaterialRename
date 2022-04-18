@@ -37,63 +37,64 @@ public class Command : IExternalCommand
         {
             _oldString = form.textBoxFind.Text;
             _newString = form.textBoxReplace.Text;
-        }
-
-        //get all the materials from the active document
-        FilteredElementCollector fec = new FilteredElementCollector(App.RevitDocument);
-        fec.OfClass(typeof(Material));
-
-        IEnumerable<Material> materials = fec.Cast<Material>();
-
-        Transaction trans = null;
-
-        try
-        {
-            trans = new Transaction(App.RevitDocument, "Rename materials and assets");
-            trans.Start();
             
-            //loop through all the materials and rename them
-            foreach (Material material in materials)
+            //get all the materials from the active document
+            FilteredElementCollector fec = new FilteredElementCollector(App.RevitDocument);
+            fec.OfClass(typeof(Material));
+
+            IEnumerable<Material> materials = fec.Cast<Material>();
+
+            Transaction trans = null;
+
+            try
             {
-                material.Name.Replace(_oldString, _newString);
-
-                //get the material asset elements
-                AppearanceAssetElement elementAppearance = (AppearanceAssetElement)App.RevitDocument.GetElement(material.AppearanceAssetId);
-                PropertySetElement elementPhysical = (PropertySetElement)App.RevitDocument.GetElement(material.StructuralAssetId);
-                PropertySetElement elementThermal = (PropertySetElement)App.RevitDocument.GetElement(material.ThermalAssetId);
-
-                //get the material asset names
-                if (elementAppearance != null)
-                {
-                    //rename the material asset
-                    Debug.WriteLine($"Apperance Asset : {elementAppearance.Name}");                  
-                    elementAppearance.Name = elementAppearance.Name.Replace(_oldString, _newString);
-                    ChangeRenderingAssetTextureName( elementAppearance,_oldString, _newString);
-                }
-                if (elementPhysical != null)
-                {
-                    //rename the material asset
-                    elementPhysical.Name = elementPhysical.Name.Replace(_oldString, _newString);
-                }
-                if (elementThermal != null)
-                {
-                    //rename the material asset
-                    elementThermal.Name = elementThermal.Name.Replace(_oldString, _newString);
-                }
-
-            }
-                        
-            trans.Commit();
-            TaskDialog.Show("MaterialRename", $"Materials and assets processed. Check the following \n {_failures.ToString()}");
-    }
-        catch (Exception ex)
-        {
+                trans = new Transaction(App.RevitDocument, "Rename materials and assets");
+                trans.Start();
             
-            trans.RollBack();
-            TaskDialog.Show("MaterialRename", ex.Message);
+                //loop through all the materials and rename them
+                foreach (Material material in materials)
+                {
+                    material.Name.Replace(_oldString, _newString);
+
+                    //get the material asset elements
+                    AppearanceAssetElement elementAppearance = (AppearanceAssetElement)App.RevitDocument.GetElement(material.AppearanceAssetId);
+                    PropertySetElement elementPhysical = (PropertySetElement)App.RevitDocument.GetElement(material.StructuralAssetId);
+                    PropertySetElement elementThermal = (PropertySetElement)App.RevitDocument.GetElement(material.ThermalAssetId);
+
+                    //get the material asset names
+                    if (elementAppearance != null)
+                    {
+                        //rename the material asset
+                        Debug.WriteLine($"Apperance Asset : {elementAppearance.Name}");                  
+                        elementAppearance.Name = elementAppearance.Name.Replace(_oldString, _newString);
+                        ChangeRenderingAssetTextureName( elementAppearance,_oldString, _newString);
+                    }
+                    if (elementPhysical != null)
+                    {
+                        //rename the material asset
+                        elementPhysical.Name = elementPhysical.Name.Replace(_oldString, _newString);
+                    }
+                    if (elementThermal != null)
+                    {
+                        //rename the material asset
+                        elementThermal.Name = elementThermal.Name.Replace(_oldString, _newString);
+                    }
+                }
+                        
+                trans.Commit();
+                TaskDialog.Show("MaterialRename", $"Materials and assets processed. Check the following \n {_failures.ToString()}");
+            }   
+            catch (Exception ex)
+            {
+                trans.RollBack();
+                TaskDialog.Show("MaterialRename", ex.Message);
+            }
+
+            return Result.Succeeded;
+            
         }
 
-        return Result.Succeeded;
+        return Result.Cancelled;
     }
     
     private void ChangeRenderingAssetTextureName(AppearanceAssetElement appearanceAsset, string oldString, string newString)
