@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <Configurations>2018;2019;2020;2021;2022</Configurations>
+    <Configurations>2019;2020;2021;2022;2023</Configurations>
     <Platforms>x64</Platforms>
     <Description>(insert description)</Description>
     <Copyright>Copyright © 2022 (insert project author). All rights Reserved</Copyright>
@@ -12,10 +12,6 @@
 	<UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == '2018'">
-    <TargetFramework>net461</TargetFramework>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == '2019'">
     <TargetFramework>net47</TargetFramework>
     <Optimize>false</Optimize>
@@ -32,6 +28,10 @@
     <TargetFramework>net48</TargetFramework>
     <Optimize>false</Optimize>
   </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == '2023'">
+		<TargetFramework>net48</TargetFramework>
+		<Optimize>false</Optimize>
+	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' &lt;= '2021'">
 		<DefineConstants>DEBUG;REVIT$(Configuration);PREFORGETYPEID</DefineConstants>
