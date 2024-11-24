@@ -19,7 +19,6 @@ public class App : IExternalApplication
     public static Autodesk.Revit.DB.Document RevitDocument;
 
     private AppDocEvents _appEvents;
-    private readonly string _tabName = "RG Tools";
     
     public Result OnStartup(UIControlledApplication application)
     {
@@ -60,13 +59,7 @@ public class App : IExternalApplication
     private RibbonPanel RibbonPanel(UIControlledApplication application)
     {
 
-        try
-        {
-            CachedUiCtrApp.CreateRibbonTab(_tabName);
-        }
-        catch { }
-
-        RibbonPanel panel = CachedUiCtrApp.CreateRibbonPanel(_tabName, "MaterialRename_Panel");
+        RibbonPanel panel = CachedUiCtrApp.CreateRibbonPanel("MaterialRename_Panel");
         panel.Title = "MaterialRename";
 
         PushButton button = (PushButton)panel.AddItem(
