@@ -42,7 +42,7 @@
 	</PropertyGroup>
 
   <PropertyGroup>
-    <Path_DLL_API>..\..\RevitAPI\</Path_DLL_API>
+    <Path_DLL_API>..\..\MyRevitAPI\</Path_DLL_API>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -69,6 +69,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Nice3point.Revit.Api.AdWindows" Version="$(Configuration).*" />
+	  <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(Configuration).*" />
+	  <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(Configuration).*" />
+	  
+	  
+    <!-- 	  
     <Reference Include="AdWindows">
       <HintPath>$(Path_DLL_API)\$(Configuration)\AdWindows.dll</HintPath>
       <EmbedInteropTypes>false</EmbedInteropTypes>
@@ -84,7 +90,7 @@
       <EmbedInteropTypes>false</EmbedInteropTypes>
       <Private>false</Private>
     </Reference>
-    <!-- 
+
     <Reference Include="UIFramework">
       <HintPath>$(Path_DLL_API)\$(Configuration)\UIFramework.dll</HintPath>
       <EmbedInteropTypes>false</EmbedInteropTypes>
